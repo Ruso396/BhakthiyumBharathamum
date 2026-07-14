@@ -86,7 +86,11 @@ function generateRegistrationNumber($conn) {
     return $prefix . $year . str_pad($newNum, 5, '0', STR_PAD_LEFT);
 }
 
-function uploadFile($file, $targetDir = '../uploads/payment/') {
+function uploadFile($file, $targetDir = null) {
+    // Use absolute path based on project root
+    if ($targetDir === null) {
+        $targetDir = __DIR__ . '/../uploads/payment/';
+    }
     if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
         sendError('File upload failed');
     }

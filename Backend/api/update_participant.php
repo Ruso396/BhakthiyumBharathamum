@@ -95,7 +95,7 @@ if (isset($_FILES['payment_screenshot']) && $_FILES['payment_screenshot']['error
     $params[] = $screenshot;
     
     // Delete old screenshot
-    $oldFile = __DIR__ . '/../uploads/payment/' . $existing['payment_screenshot'];
+    $oldFile = realpath(__DIR__ . '/../uploads/payment/') . '/' . $existing['payment_screenshot'];
     if (file_exists($oldFile)) {
         unlink($oldFile);
     }

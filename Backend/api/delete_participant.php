@@ -28,8 +28,8 @@ if (!$participant) {
     sendError('Participant not found', 404);
 }
 
-// Delete screenshot file
-$filePath = __DIR__ . '/../uploads/payment/' . $participant['payment_screenshot'];
+// Delete screenshot file (absolute path for router compatibility)
+$filePath = realpath(__DIR__ . '/../uploads/payment/') . '/' . $participant['payment_screenshot'];
 if (file_exists($filePath)) {
     unlink($filePath);
 }
