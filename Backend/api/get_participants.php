@@ -9,26 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     sendError('Method not allowed', 405);
 }
 
-// Verify admin via Authorization header
-$headers = getallheaders();
-$authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
-if (empty($authHeader)) {
-    sendError('Unauthorized', 401);
-}
-
-$token = str_replace('Bearer ', '', $authHeader);
-$decoded = base64_decode($token);
-$parts = explode(':', $decoded);
-
-if (count($parts) !== 2) {
-    sendError('Invalid token', 401);
-}
-
-$stmt = $conn->prepare("SELECT id FROM admins WHERE username = ? AND password = ?");
-$stmt->execute([$parts[0], $parts[1]]);
-if (!$stmt->fetch()) {
-    sendError('Invalid credentials', 401);
-}
+// Verify admin using bcrypt password verification
+verifyAdmin($conn);
 
 // Build query with filters
 $query = "SELECT * FROM participants WHERE 1=1";

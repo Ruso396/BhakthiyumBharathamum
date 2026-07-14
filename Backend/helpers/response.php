@@ -32,6 +32,41 @@ function validateRequired($fields, $data) {
     }
 }
 
+function verifyAdmin($conn) {
+    $headers = getallheaders();
+    $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
+    
+    if (empty($authHeader)) {
+        sendError('Unauthorized - No token provided', 401);
+    }
+    
+    $token = str_replace('Bearer ', '', $authHeader);
+    $decoded = base64_decode($token);
+    $parts = explode(':', $decoded);
+    
+    if (count($parts) !== 2) {
+        sendError('Unauthorized - Invalid token format', 401);
+    }
+    
+    $username = $parts[0];
+    $password = $parts[1];
+    
+    $stmt = $conn->prepare("SELECT * FROM admins WHERE username = ?");
+    $stmt->execute([$username]);
+    $admin = $stmt->fetch();
+    
+    if (!$admin) {
+        sendError('Unauthorized - Admin not found', 401);
+    }
+    
+    // Verify password against bcrypt hash
+    if (!password_verify($password, $admin['password'])) {
+        sendError('Unauthorized - Invalid password', 401);
+    }
+    
+    return $admin;
+}
+
 function generateRegistrationNumber($conn) {
     $prefix = 'BB';
     $year = date('Y');

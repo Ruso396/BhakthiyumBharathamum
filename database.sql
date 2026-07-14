@@ -42,6 +42,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Insert default admin (username: admin, password: admin123)
+-- Password is bcrypt hashed using PHP password_hash()
 
 INSERT INTO `admins` (`username`, `password`) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+('admin', '$2y$10$dnqi9FKwDwKXs4fBS/H84ul9A3cw2Zwkn.t4ChFaWpb44BvTYwSya');

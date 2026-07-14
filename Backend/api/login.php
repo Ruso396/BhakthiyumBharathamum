@@ -22,14 +22,16 @@ $stmt = $conn->prepare("SELECT * FROM admins WHERE username = ?");
 $stmt->execute([$username]);
 $admin = $stmt->fetch();
 
-if (!$admin || !password_verify($password, $admin['password'])) {
-    // For default admin hash comparison
-    if (!($username === 'admin' && $password === 'admin123')) {
-        sendError('Invalid credentials', 401);
-    }
+if (!$admin) {
+    sendError('Invalid credentials', 401);
 }
 
-// Generate token (simple base64 encoded username:password)
+// Verify password against bcrypt hash stored in database
+if (!password_verify($password, $admin['password'])) {
+    sendError('Invalid credentials', 401);
+}
+
+// Generate token (base64 encoded username:password for simple auth)
 $token = base64_encode($username . ':' . $password);
 
 sendSuccess([
