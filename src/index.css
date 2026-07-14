@@ -1,77 +1,178 @@
-/* index.css */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* =========================
+   Tailwind Theme
+========================= */
 @theme {
-  --color-cream: #fffbf7;
-  --color-maroon: #6A1E14;
-  --color-gold: #D4AF37;
-  --color-gold-20: rgba(212, 175, 55, 0.2);
+  --color-maroon-50: #fdf2f2;
+  --color-maroon-100: #fce3e3;
+  --color-maroon-200: #f9cccc;
+  --color-maroon-300: #f4a5a5;
+  --color-maroon-400: #ec7575;
+  --color-maroon-500: #e04a4a;
+  --color-maroon-600: #ce2d2d;
+  --color-maroon-700: #ad2222;
+  --color-maroon-800: #8f1f1f;
+  --color-maroon-900: #781e1e;
+  --color-maroon-950: #420b0b;
+
+  --color-gold-50: #fffef2;
+  --color-gold-100: #fffbe0;
+  --color-gold-200: #fff6b3;
+  --color-gold-300: #ffed7a;
+  --color-gold-400: #ffde3d;
+  --color-gold-500: #ffcc14;
+  --color-gold-600: #d9a800;
+  --color-gold-700: #ad8300;
+  --color-gold-800: #8f6d00;
+  --color-gold-900: #755a00;
+  --color-gold-950: #453300;
 }
 
-@layer base {
-  html {
-    overflow-x: hidden;
-    width: 100%;
-  }
-  body {
-    font-family: 'Inter', 'Noto Sans Tamil', sans-serif;
-    background: var(--color-cream);
-    color: #1a1a1a;
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================
+   Root Variables
+========================= */
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================
+   Responsive Root
+========================= */
+@media (max-width: 1024px) {
+  :root {
+    font-size: 16px;
   }
 }
 
-@layer components {
-  .container-custom {
-    @apply max-w-[1200px] mx-auto px-6;
+/* =========================
+   Dark Mode
+========================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
+      rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
-  .section-title {
-    @apply text-center mt-12 mb-8;
-  }
-  .section-title h2 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-extrabold text-maroon;
-  }
-  .section-title h2 span {
-    @apply text-gold;
-  }
-  .section-title .line {
-    @apply w-24 h-1 bg-gradient-to-r from-gold via-maroon to-gold mx-auto mt-3 rounded;
-  }
-  .btn-primary {
-    @apply inline-flex items-center gap-3 bg-maroon text-white px-8 py-4 rounded-full font-bold text-base md:text-lg border-none cursor-pointer transition-all duration-300 shadow-lg hover:bg-gold hover:text-maroon hover:-translate-y-1 hover:shadow-gold/35;
-  }
-  .btn-maroon {
-    @apply inline-flex items-center gap-3 bg-maroon text-white px-7 py-3.5 rounded-full font-bold text-sm md:text-base border-none cursor-pointer transition-all duration-300 shadow-lg hover:bg-gold hover:text-maroon hover:-translate-y-1 hover:shadow-gold/35;
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
   }
 }
 
-@layer utilities {
-  .backdrop-blur-custom {
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+/* =========================
+   Global
+========================= */
+body {
+  margin: 0;
+  font-family: "Inter", var(--sans);
+  background-color: #fafafa;
+  color: var(--text);
+  background: var(--bg);
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* =========================
+   Typography
+========================= */
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 36px;
+    margin: 20px 0;
   }
-  .hero-gradient {
-    background: linear-gradient(to right, rgba(44, 26, 18, 0.85) 0%, rgba(44, 26, 18, 0.40) 50%, rgba(44, 26, 18, 0.75) 100%);
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 1024px) {
+  h2 {
+    font-size: 20px;
   }
-  .gold-border {
-    border-color: #D4AF37;
-  }
-  .text-shadow {
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-  }
-  .card-hover {
-    @apply transition-all duration-300 hover:border-gold hover:-translate-y-2;
-  }
-  .detail-card-before::before {
-    content: '';
-    @apply absolute top-0 left-0 w-1.5 h-full bg-maroon;
-  }
+}
+
+p {
+  margin: 0;
+}
+
+/* =========================
+   Code Styles
+========================= */
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
 }
