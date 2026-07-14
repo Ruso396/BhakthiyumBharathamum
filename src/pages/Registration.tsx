@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { registerParticipant } from '../services/api';
 import Toast from '../components/Toast';
 import type { FormErrors } from '../types';
+import qrCodeImage from '../assets/gpay-screenshot.jpg';
 
 const indianStates = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -276,6 +277,29 @@ const Registration = () => {
                   ))}
                 </select>
                 {errors.state && <p className="mt-1 text-sm text-red-500">{errors.state}</p>}
+              </div>
+            </div>
+
+            {/* Scan & Pay - QR Code */}
+            <div className="bg-gradient-to-br from-maroon-50 to-gold-50 rounded-2xl p-6 border-2 border-maroon-100 shadow-lg">
+              <div className="text-center mb-4">
+                <div className="text-3xl mb-2">📱</div>
+                <h3 className="text-xl font-bold text-maroon-800">Scan QR Code & Complete Payment</h3>
+                <p className="text-sm text-maroon-600 mt-1">Scan this QR code using any UPI app to make the payment</p>
+              </div>
+              <div className="flex justify-center">
+                <div className="bg-white p-4 rounded-xl shadow-inner max-w-xs w-full">
+                  <img
+                    src={qrCodeImage}
+                    alt="UPI QR Code for Payment"
+                    className="w-full h-auto rounded-lg"
+                  />
+                </div>
+              </div>
+              <div className="mt-4 text-center">
+                <p className="text-xs text-maroon-500">
+                  After payment, enter your UPI ID and upload the payment screenshot below
+                </p>
               </div>
             </div>
 
