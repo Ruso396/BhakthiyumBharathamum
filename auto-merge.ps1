@@ -57,15 +57,21 @@ if ($pullExitCode -eq 0) {
         Write-Host "  Resolving: $file" -ForegroundColor Yellow
         
         $content = Get-Content $file -Raw
-        # Pattern: keep both <<<<<<< ... ======= ... >>>>>>> sections
-        $resolved = [regex]::Replace($content, '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n', {
-            $param1 = $_.Groups[1].Value
-            $param2 = $_.Groups[2].Value
-            # Keep BOTH sides, remove markers
-            return $param1.TrimEnd() + "`n" + $param2.TrimEnd() + "`n"
-        })
+        # Loop until all nested conflict markers are resolved
+        while ($content -match '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n') {
+            $content = [regex]::Replace($content, '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n', {
+                $param1 = $_.Groups[1].Value
+                $param2 = $_.Groups[2].Value
+                # Keep BOTH sides, remove markers
+                return $param1.TrimEnd() + "`n" + $param2.TrimEnd() + "`n"
+            })
+        }
+        # Also remove any remaining partial conflict markers that regex may have missed
+        $content = $content -replace '(?m)^<{7,} .*$', ''
+        $content = $content -replace '(?m)^={7,}.*$', ''
+        $content = $content -replace '(?m)^>{7,} .*$', ''
         
-        [System.IO.File]::WriteAllText((Resolve-Path $file).Path, $resolved)
+        [System.IO.File]::WriteAllText((Resolve-Path $file).Path, $content)
         Write-Host "    -> Resolved (kept both sides)." -ForegroundColor Green
     }
     
@@ -91,12 +97,17 @@ if ($stashed) {
         foreach ($file in $stashConflicts) {
             Write-Host "  Resolving stash conflict: $file" -ForegroundColor Yellow
             $content = Get-Content $file -Raw
-            $resolved = [regex]::Replace($content, '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n', {
-                $param1 = $_.Groups[1].Value
-                $param2 = $_.Groups[2].Value
-                return $param1.TrimEnd() + "`n" + $param2.TrimEnd() + "`n"
-            })
-            [System.IO.File]::WriteAllText((Resolve-Path $file).Path, $resolved)
+            while ($content -match '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n') {
+                $content = [regex]::Replace($content, '(?s)<<<<<<< .*?\n(.*?)=======\n(.*?)>>>>>>> .*?\n', {
+                    $param1 = $_.Groups[1].Value
+                    $param2 = $_.Groups[2].Value
+                    return $param1.TrimEnd() + "`n" + $param2.TrimEnd() + "`n"
+                })
+            }
+            $content = $content -replace '(?m)^<{7,} .*$', ''
+            $content = $content -replace '(?m)^={7,}.*$', ''
+            $content = $content -replace '(?m)^>{7,} .*$', ''
+            [System.IO.File]::WriteAllText((Resolve-Path $file).Path, $content)
             Write-Host "    -> Resolved (kept both sides)." -ForegroundColor Green
         }
         

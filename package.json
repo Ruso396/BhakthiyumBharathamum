@@ -10,16 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "qrcode": "^1.5.4",
-=======
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
-<<<<<<< Updated upstream
->>>>>>> 41db3335ff7fd048a6a1a7af31507c0ea1c68d3c
-=======
     "lucide-react": "^1.24.0",
->>>>>>> Stashed changes
+    "qrcode": "^1.5.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
@@ -28,6 +22,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "@types/node": "^24.13.2",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",

@@ -3,9 +3,6 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-<<<<<<< HEAD
-  plugins: [tailwindcss(), react()],
-=======
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
@@ -19,5 +16,4 @@ export default defineConfig({
       },
     },
   },
->>>>>>> 41db3335ff7fd048a6a1a7af31507c0ea1c68d3c
 })
