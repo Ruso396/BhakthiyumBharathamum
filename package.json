@@ -15,7 +15,11 @@
 =======
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
+<<<<<<< Updated upstream
 >>>>>>> 41db3335ff7fd048a6a1a7af31507c0ea1c68d3c
+=======
+    "lucide-react": "^1.24.0",
+>>>>>>> Stashed changes
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
